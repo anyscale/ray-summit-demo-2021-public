@@ -37,3 +37,8 @@ Utils
 -----
 
 The Grafana dashboard JSON and file for Locust load testing are in ``util/``.
+
+CI
+--
+
+CI is not configured to run on this repository, but the code is in ``.github/workflows/deploy.yml.``
