@@ -1,0 +1,41 @@
+name: Deploy to Anyscale
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Python 3.7
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.7
+
+    - uses: actions/cache@v2
+      with:
+        path: ${{ env.pythonLocation }}
+        key: ${{ env.pythonLocation }}-${{ hashFiles('requirements-ci.txt') }}
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --use-deprecated=legacy-resolver -r requirements.txt
+
+    - name: Test on Staging
+      env:
+        ANYSCALE_SECRETS: ${{ secrets.ANYSCALE_SECRETS }}
+
+      run: |
+        echo $ANYSCALE_SECRETS > secrets && source secrets
+        RAY_ADDRESS="anyscale://staging" python chatbot.py
+
+    - name: Deploy to Production
+      env:
+        ANYSCALE_SECRETS: ${{ secrets.ANYSCALE_SECRETS }}
+
+      run: |
+        echo $ANYSCALE_SECRETS > secrets && source secrets
+        RAY_ADDRESS="anyscale://prod" python chatbot.py

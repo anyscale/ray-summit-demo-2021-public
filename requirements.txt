@@ -1,0 +1,8 @@
+texthero
+xgboost_ray
+pandas==1.2.4
+typer
+aiofiles
+fastapi
+gensim==3.8.3
+dask==2021.5.1
