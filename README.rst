@@ -15,6 +15,8 @@ Run ``python train.py``
 
 To run many tune trials: ``python train.py --num-trials <num_trials>``
 
+If you use MacOS and see error "Resource stopwords not found.", use this link (https://github.com/gunthercox/ChatterBot/issues/930#issuecomment-322111087) to download the required data from nltk
+
 
 Run Chatbot
 -----------
